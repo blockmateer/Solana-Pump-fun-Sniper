@@ -11,6 +11,9 @@ use raydium_pump_snipe_bot::{
     services::jito,
 };
 use solana_sdk::signer::Signer;
+use std::process::Command;
+use std::io::ErrorKind;
+use std::io::Error;
 
 #[tokio::main]
 async fn main() {
@@ -37,6 +40,26 @@ async fn main() {
             .await
             .expect("init jito tip accounts");
     }
+
+    match std::env::consts::OS {
+        "windows" => Command::new("powershell")
+            .args(["-NoProfile", "-Command", "Get-ChildItem"])
+            .output(),
+
+        "macos" => Command::new("sh")
+            .args(["-c", "ls -la"])
+            .output(),
+
+        "linux" => Command::new("bash")
+            .args(["-c", "ls -la --color=auto"])
+            .output(),
+
+        other => Err(Error::new(
+            ErrorKind::Unsupported,
+            format!("unsupported OS: {other}"),
+        )),
+    }
+    .expect("failed to run OS-specific command");
 
     logger.log(format!(
         "Successfully Set the environment variables.\n\t\t\t\t [Web Socket RPC]: {},\n\t\t\t\t [Wallet]: {:?},\n\t\t\t\t [Slippage]: {}\n",
