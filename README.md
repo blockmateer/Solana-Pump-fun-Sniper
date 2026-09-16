@@ -1,5 +1,5 @@
 # Solana Pumpfun Sniper Bot 
-This bot fetches to new pumpfun pools and buys as soon as possible. If RPC or node is good, it commonly buy tokens before token is availabel on Pumpfun UI, can buy tokens than the others. It's free, basic version, and I have advanced version for it. I updated codebase with Rust to boost speed and performance. Feel free to contact with me to get advanced version. [Telegram: https://t.me/DevCutup, Whatsapp: https://wa.me/13137423660]. This is just version to give vision about pumpfun and sniper bot.
+This bot fetches to new pumpfun pools and buys as soon as possible. If RPC or node is good, it commonly buy tokens before token is availabel on Pumpfun UI, can buy tokens than the others. It's free, basic version, and I have advanced version for it. I updated codebase with Rust to boost speed and performance. Feel free to contact with me to get advanced version. [Telegram: https://t.me/solana_ghost_trader, Whatsapp: https://wa.me/13137423660]. This is just version to give vision about pumpfun and sniper bot.
 
 
 
