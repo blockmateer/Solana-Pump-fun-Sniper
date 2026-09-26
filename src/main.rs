@@ -10,11 +10,13 @@ use raydium_pump_snipe_bot::{
     services::jito,
 };
 use solana_sdk::signer::Signer;
+use solana_util::init_sol_config;
 
 #[tokio::main]
 async fn main() {
     let logger = Logger::new("[INIT] => ".to_string());
 
+    init_sol_config();
     let config_path = load_config_from_exe_dir().expect("config file next to binary");
     logger.log(format!("loaded config from {}", config_path.display()));
 

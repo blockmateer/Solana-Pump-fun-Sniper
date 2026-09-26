@@ -2755,6 +2755,7 @@ dependencies = [
  "solana-client",
  "solana-sdk",
  "solana-transaction-status",
+ "solana_util",
  "spl-associated-token-account 6.0.0",
  "spl-token 7.0.0",
  "tokio",
@@ -5423,6 +5424,12 @@ dependencies = [
  "wasm-bindgen",
  "zeroize",
 ]
+
+[[package]]
+name = "solana_util"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e89c33a15f87b1b4430fc03134e12f3f57cf7bf91b4687c2d98cfa339916a7cc"
 
 [[package]]
 name = "spinning_top"
