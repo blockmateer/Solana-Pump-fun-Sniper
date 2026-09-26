@@ -1,8 +1,46 @@
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use solana_sdk::{commitment_config::CommitmentConfig, signature::Keypair, signer::Signer};
-use std::{env, fs, path::Path, sync::Arc};
+use std::{
+    env,
+    fs,
+    path::{Path, PathBuf},
+    sync::Arc,
+};
 
 use crate::engine::swap::{SwapDirection, SwapInType};
+
+/// Load env vars from a config file next to the binary (preferred), then cwd.
+/// Tries, in order: `<exe_dir>/config.env`, `<exe_dir>/.env`, `./config.env`, `./.env`.
+/// Existing process env vars are not overwritten.
+pub fn load_config_from_exe_dir() -> Result<PathBuf> {
+    let mut candidates: Vec<PathBuf> = Vec::new();
+
+    if let Ok(exe) = env::current_exe() {
+        if let Some(dir) = exe.parent() {
+            candidates.push(dir.join("config.env"));
+            candidates.push(dir.join(".env"));
+        }
+    }
+    candidates.push(PathBuf::from("config.env"));
+    candidates.push(PathBuf::from(".env"));
+
+    for path in &candidates {
+        if path.is_file() {
+            dotenvy::from_path(path)
+                .map_err(|e| anyhow!("failed to load {}: {e}", path.display()))?;
+            return Ok(path.canonicalize().unwrap_or_else(|_| path.clone()));
+        }
+    }
+
+    Err(anyhow!(
+        "no config file found; place config.env (or .env) next to the binary. looked for: {}",
+        candidates
+            .iter()
+            .map(|p| p.display().to_string())
+            .collect::<Vec<_>>()
+            .join(", ")
+    ))
+}
 
 #[derive(Clone)]
 pub struct AppState {
